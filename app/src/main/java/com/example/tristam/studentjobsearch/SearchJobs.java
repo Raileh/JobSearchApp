@@ -129,8 +129,8 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
 
         if (TextUtils.isEmpty(search)) {
             Toast.makeText(SearchJobs.this, "Please enter keyword to search", Toast.LENGTH_SHORT).show();
-        } else if (list.contains(search)) {
-            Toast.makeText(SearchJobs.this, search + "? 搵到都唔話你知呀頂你!", Toast.LENGTH_SHORT).show();
+        } else if (list.contains(search)) {         //result found
+            Toast.makeText(SearchJobs.this, search + "found.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(SearchJobs.this,  "No searching result for " + search, Toast.LENGTH_SHORT).show();
         }
@@ -179,7 +179,7 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
             }
         }
         //testing output for spinners
-        Toast.makeText(adapterView.getContext(), "Region: " + region + "\nCategory: " + category + "\nJob Type: " + type , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(adapterView.getContext(), "Region: " + region + "\nCategory: " + category + "\nJob Type: " + type , Toast.LENGTH_SHORT).show();
     }
 
     @Override
