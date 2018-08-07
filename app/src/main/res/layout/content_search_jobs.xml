@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +29,7 @@
         android:shadowColor="@color/shadowColor"
         android:textSize="14sp"
         android:drawablePadding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/locationSpinner"
+        app:layout_constraintBottom_toTopOf="@+id/regionSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coffeeshop" />
@@ -54,9 +53,9 @@
         app:layout_constraintVertical_bias="0.871" />
 
     <Spinner
-        android:id="@+id/locationSpinner"
-        android:prompt="@string/locations"
-        android:entries="@array/locations"
+        android:id="@+id/regionSpinner"
+        android:prompt="@string/regions"
+        android:entries="@array/regions"
         android:layout_width="318dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
@@ -64,16 +63,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/white_textbox_rounded"
-        app:layout_constraintBottom_toTopOf="@+id/salarySpinner"
+        app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coffeeshop"
         app:layout_constraintVertical_bias="0.921" />
 
     <Spinner
-        android:id="@+id/salarySpinner"
-        android:prompt="@string/salary"
-        android:entries="@array/salary"
+        android:id="@+id/categorySpinner"
+        android:prompt="@string/categories"
+        android:entries="@array/categories"
         android:layout_width="318dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
@@ -81,16 +80,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/white_textbox_rounded"
-        app:layout_constraintBottom_toTopOf="@+id/titleSpinner"
+        app:layout_constraintBottom_toTopOf="@+id/jobTypeSpinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coffeeshop"
         app:layout_constraintVertical_bias="0.964" />
 
     <Spinner
-        android:id="@+id/titleSpinner"
-        android:prompt="@string/title"
-        android:entries="@array/titles"
+        android:id="@+id/jobTypeSpinner"
+        android:prompt="@string/jobType"
+        android:entries="@array/jobType"
         android:layout_width="318dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
@@ -174,11 +173,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/content_desc"
-        app:layout_constraintBottom_toBottomOf="@+id/locationSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/locationSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/regionSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/regionSpinner"
         app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="@+id/locationSpinner"
-        app:layout_constraintTop_toTopOf="@+id/locationSpinner"
+        app:layout_constraintStart_toStartOf="@+id/regionSpinner"
+        app:layout_constraintTop_toTopOf="@+id/regionSpinner"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/downarrow" />
 
@@ -191,11 +190,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/content_desc"
-        app:layout_constraintBottom_toBottomOf="@+id/salarySpinner"
-        app:layout_constraintEnd_toEndOf="@+id/salarySpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/categorySpinner"
+        app:layout_constraintEnd_toEndOf="@+id/categorySpinner"
         app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="@+id/salarySpinner"
-        app:layout_constraintTop_toTopOf="@+id/salarySpinner"
+        app:layout_constraintStart_toStartOf="@+id/categorySpinner"
+        app:layout_constraintTop_toTopOf="@+id/categorySpinner"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/downarrow" />
 
@@ -208,11 +207,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/content_desc"
-        app:layout_constraintBottom_toBottomOf="@+id/titleSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/titleSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/jobTypeSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/jobTypeSpinner"
         app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="@+id/titleSpinner"
-        app:layout_constraintTop_toTopOf="@+id/titleSpinner"
+        app:layout_constraintStart_toStartOf="@+id/jobTypeSpinner"
+        app:layout_constraintTop_toTopOf="@+id/jobTypeSpinner"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/downarrow" />
 

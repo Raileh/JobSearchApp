@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -25,8 +26,10 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-
     private FirebaseAuth firebaseAuth;
+
+    //
+    private DatabaseReference jobDB;
 
     //
     private EditText searchValue;
@@ -34,17 +37,19 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
     public ArrayList<String> list = new ArrayList<>();
 
     //
-    public String location;
-    public int salary;
-    public String title;
+    public String region="";
+    public String category= "";
+    public String type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this layout is content the "content_search_jobs"
         setContentView(R.layout.activity_search_jobs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Jobs Database
+        //jobDB = FirebaseDatabase.getInstance().getReference("Jobs");
 
         //get value from editText(search)
         searchValue = findViewById(R.id.editText);
@@ -56,28 +61,25 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         list.add("002asdf");
 
         //Spinners
-        Spinner locationSpinner = findViewById(R.id.locationSpinner);
-        Spinner salarySpinner = findViewById(R.id.salarySpinner);
-        Spinner titleSpinner = findViewById(R.id.titleSpinner);
+        Spinner regionSpinner = findViewById(R.id.regionSpinner);
+        Spinner categorySpinner = findViewById(R.id.categorySpinner);
+        Spinner jobTypeSpinner = findViewById(R.id.jobTypeSpinner);
 
-        ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(this,R.array.locations, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> salaryAdapter = ArrayAdapter.createFromResource(this,R.array.salary, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> titleAdapter = ArrayAdapter.createFromResource(this,R.array.titles, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> regionAdapter = ArrayAdapter.createFromResource(this,R.array.regions, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(this,R.array.categories, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> jobTypeAdapter = ArrayAdapter.createFromResource(this,R.array.jobType, android.R.layout.simple_spinner_item);
 
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locationSpinner.setAdapter(locationAdapter);
-        locationSpinner.setOnItemSelectedListener(this);
+        regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        regionSpinner.setAdapter(regionAdapter);
+        regionSpinner.setOnItemSelectedListener(this);
 
-        salaryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        salarySpinner.setAdapter(salaryAdapter);
-        salarySpinner.setOnItemSelectedListener(this);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
+        categorySpinner.setOnItemSelectedListener(this);
 
-        titleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        titleSpinner.setAdapter(titleAdapter);
-        titleSpinner.setOnItemSelectedListener(this);
-
-
-
+        jobTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jobTypeSpinner.setAdapter(jobTypeAdapter);
+        jobTypeSpinner.setOnItemSelectedListener(this);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -91,12 +93,11 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-        //the button is on "content_search_jobs" not on "activity_search_jobs"; reason for cannot resolve?
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 startSearch();
+                //firebaseSearch();
             }
         });
 
@@ -127,19 +128,20 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         String search = searchValue.getText().toString();
 
         if (TextUtils.isEmpty(search)) {
-            Toast.makeText(SearchJobs.this, "唔講我知搵咩, 我搵鬼到呀?", Toast.LENGTH_SHORT).show();
-        } else if (search.equals("potato")) {
-            Toast.makeText(SearchJobs.this, "Potato? 食薯仔啦頂你~", Toast.LENGTH_SHORT).show();
-        } else if (search.equals("tomato")) {
-            Toast.makeText(SearchJobs.this, "Tomato? 食蕃茄啦頂你~", Toast.LENGTH_SHORT).show();
-        } else if (search.equals("potatomato")) {
-            Toast.makeText(SearchJobs.this, "Potatomato? 溝埋變做蕃薯茄仔呀笨!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchJobs.this, "Please enter keyword to search", Toast.LENGTH_SHORT).show();
         } else if (list.contains(search)) {
             Toast.makeText(SearchJobs.this, search + "? 搵到都唔話你知呀頂你!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(SearchJobs.this, search + "? 搵唔到呀頂你!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchJobs.this,  "No searching result for " + search, Toast.LENGTH_SHORT).show();
         }
     }
+
+//    private void firebaseSearch(){
+//        Jobs.class;
+//        jobDB;
+//
+//
+//    }
 
     private void Logout(){
         firebaseAuth.signOut();
@@ -151,19 +153,33 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch(adapterView.getId()){
-            case R.id.locationSpinner:
-                location = adapterView.getItemAtPosition(i).toString();
-                break;
-            case R.id.salarySpinner:
-                salary = Integer.parseInt(adapterView.getItemAtPosition(i).toString());
-                break;
-            case R.id.titleSpinner:
-                title = adapterView.getItemAtPosition(i).toString();
-                break;
+        if (i > 0) {
+            switch (adapterView.getId()) {
+                case R.id.regionSpinner:
+                    region = adapterView.getItemAtPosition(i).toString();
+                    break;
+                case R.id.categorySpinner:
+                    category = adapterView.getItemAtPosition(i).toString();
+                    break;
+                case R.id.jobTypeSpinner:
+                    type = adapterView.getItemAtPosition(i).toString();
+                    break;
+            }
+        } else {
+            switch (adapterView.getId()) {
+                case R.id.regionSpinner:
+                    region = "";
+                    break;
+                case R.id.categorySpinner:
+                    category = "";
+                    break;
+                case R.id.jobTypeSpinner:
+                    type = "";
+                    break;
+            }
         }
-//        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
-
+        //testing output for spinners
+        Toast.makeText(adapterView.getContext(), "Region: " + region + "\nCategory: " + category + "\nJob Type: " + type , Toast.LENGTH_SHORT).show();
     }
 
     @Override

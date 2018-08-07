@@ -8,20 +8,24 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="logout_text">Logout</string>
-    <string name="locations">Locations</string>
-    <string name="salary">Salary</string>
-    <string name="title">Job Title</string>
-    <string-array name="locations">
-        <item>Petone</item>
-        <item>Hutt Central</item>
+    <string name="regions">Regions</string>
+    <string name="categories">Categories</string>
+    <string name="jobType">Job Type</string>
+    <string-array name="regions">
+        <item>Region</item>
+        <item>Auckland</item>
+        <item>Wellington</item>
     </string-array>
-    <string-array name="salary">
-        <item>>$100~200</item>
-        <item>>$200~300</item>
+    <string-array name="categories">
+        <item>Category</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
     </string-array>
-    <string-array name="titles">
-        <item>Developer</item>
-        <item>Programmer</item>
-        <item>Tester</item>
+    <string-array name="jobType">
+        <item>Job Type</item>
+        <item>Casual</item>
+        <item>Full-Time</item>
+        <item>Part-Time</item>
     </string-array>
 </resources>
