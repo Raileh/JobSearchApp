@@ -1,41 +1,42 @@
 package com.example.tristam.studentjobsearch;
 
 public class Jobs {
-    public String location;
-    public int salary;
-    public String title;
+    public String region;
+    public String category;
+    public String type;
 
-    public Jobs(String location, int salary, String title) {
-        this.location = location;
-        this.salary = salary;
-        this.title = title;
+    public Jobs(String region, String category, String type) {
+        this.region = region;
+        this.category = category;
+        this.type = type;
     }
 
     public Jobs(){
 
     }
 
-    public String getLocation() {
-        return location;
+
+    public String getRegion() {
+        return region;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    public int getSalary() {
-        return salary;
+    public String getCategory() {
+        return category;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setType(String type) {
+        this.type = type;
     }
 }
