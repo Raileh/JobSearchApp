@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -28,18 +29,21 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
     private ActionBarDrawerToggle mToggle;
     private FirebaseAuth firebaseAuth;
 
-    //
-    private DatabaseReference jobDB;
+    //Jobs Database
+    //public DatabaseReference jobDB;
 
-    //
+    //Search components
     private EditText searchValue;
     private Button searchButton;
     public ArrayList<String> list = new ArrayList<>();
 
-    //
+    //Spinners' values
     public String region="";
     public String category= "";
     public String type="";
+
+    // Firebase URL
+    public String url = "https://assignment1-ba25d.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,8 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Jobs Database
-        //jobDB = FirebaseDatabase.getInstance().getReference("Jobs");
+        // Get Reference
+        //jobDB = FirebaseDatabase.getInstance().getReference();
 
         //get value from editText(search)
         searchValue = findViewById(R.id.editText);
@@ -97,7 +101,6 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
             @Override
             public void onClick(View v){
                 startSearch();
-                //firebaseSearch();
             }
         });
 
@@ -132,8 +135,9 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         } else if (list.contains(search)) {         //result found
             Toast.makeText(SearchJobs.this, search + "found.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(SearchJobs.this,  "No searching result for " + search, Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchJobs.this,  "No matching result for " + search, Toast.LENGTH_SHORT).show();
         }
+        System.out.println(url);
     }
 
 //    private void firebaseSearch(){
