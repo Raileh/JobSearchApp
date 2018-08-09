@@ -39,7 +39,7 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
 //    FirebaseDatabase jobDB;
 
     // Job Values
-    ArrayList<Job> jobArrayList = new ArrayList<>(); // 9/8
+    ArrayList<Jobs> jobArrayList = new ArrayList<>(); // 9/8
 
     // Search components
     private EditText searchValue;
