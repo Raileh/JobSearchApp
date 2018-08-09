@@ -25,7 +25,7 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar"
 
-            app:layout_anchorGravity="top|center"/>
+            app:layout_anchorGravity="top|center" />
 
 
     </RelativeLayout>

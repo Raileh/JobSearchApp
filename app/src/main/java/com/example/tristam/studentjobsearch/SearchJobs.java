@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +21,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -29,15 +35,22 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
     private ActionBarDrawerToggle mToggle;
     private FirebaseAuth firebaseAuth;
 
-    //Jobs Database
-    //public DatabaseReference jobDB;
+    // Testing - try to display the result
+//    FirebaseDatabase jobDB;
 
-    //Search components
+    // Job Values
+    ArrayList<Job> jobArrayList = new ArrayList<>(); // 9/8
+
+    // Search components
     private EditText searchValue;
     private Button searchButton;
     public ArrayList<String> list = new ArrayList<>();
 
-    //Spinners' values
+    // Testing - try to display the result
+//    private RecyclerView resultRV;
+//    private SearchJobAdapter searchJobAdapter;
+
+    // Spinners' values
     public String region="";
     public String category= "";
     public String type="";
@@ -52,19 +65,52 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Get Reference
-        //jobDB = FirebaseDatabase.getInstance().getReference();
-
-        //get value from editText(search)
+        // Search component
         searchValue = findViewById(R.id.editText);
         searchButton = findViewById(R.id.searchButton);
-        //Search list
-        list.add("qwer001");
-        list.add("qwer002");
-        list.add("001asdf");
-        list.add("002asdf");
 
-        //Spinners
+        // Testing - try to display the result
+//        resultRV = findViewById(R.id.result_recyclerView);
+
+        // jobDB
+//        FirebaseDatabase jobDB = FirebaseDatabase.getInstance();
+//        DatabaseReference jobRef = jobDB.getReference();
+
+
+        //listArray
+        list.add("potato");
+        list.add("tomato");
+        list.add("potatomato");
+
+        // Result - RecyclerView
+//        resultRV.setHasFixedSize(true);
+//        resultRV.setLayoutManager(new LinearLayoutManager(this));
+//        resultRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        // Testing - try to display the result
+//        searchValue.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable text) {
+//                if (!text.toString().isEmpty()){
+//                    setAdapter(text.toString());
+//                } else {
+//                    jobArrayList.clear();
+//                }
+//
+//            }
+//        });
+
+        // Spinners
         Spinner regionSpinner = findViewById(R.id.regionSpinner);
         Spinner categorySpinner = findViewById(R.id.categorySpinner);
         Spinner jobTypeSpinner = findViewById(R.id.jobTypeSpinner);
@@ -85,7 +131,6 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         jobTypeSpinner.setAdapter(jobTypeAdapter);
         jobTypeSpinner.setOnItemSelectedListener(this);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -103,8 +148,42 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
                 startSearch();
             }
         });
-
     }
+
+    // Testing - try to display the result
+//    private void setAdapter (final String searching){
+//        FirebaseDatabase jobDB = FirebaseDatabase.getInstance("jobs");
+//        jobDB.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                int counter = 0;
+//                jobArrayList.clear();
+//
+//                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+//                    String ID = snapshot.getKey();
+//                    String title = snapshot.child("title").getValue(String.class);
+//                    String region = snapshot.child("region").getValue(String.class);
+//                    String category = snapshot.child("category").getValue(String.class);
+//                    String type = snapshot.child("type").getValue(String.class);
+//
+//                    if (title.toLowerCase().contains(searching.toLowerCase())){
+//                        Job job = new Job(title,region,category,type);
+//                        jobArrayList.add(job);
+//                        counter++;
+//                    } else if (title.contains(null)) {
+//                        System.out.println(counter + " matching result found.");
+//                        break;
+//                    }
+//                }
+//                searchJobAdapter = new SearchJobAdapter(SearchJobs.this,jobArrayList);
+//                resultRV.setAdapter(searchJobAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,7 +194,6 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
         switch(item.getItemId()){
             case R.id.logoutMenu:
                 Logout();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -132,28 +210,21 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
 
         if (TextUtils.isEmpty(search)) {
             Toast.makeText(SearchJobs.this, "Please enter keyword to search", Toast.LENGTH_SHORT).show();
-        } else if (list.contains(search)) {         //result found
+        } else if (list.contains(search.toLowerCase())) {         //result found
+            setContentView(R.layout.activity_search_result);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
             Toast.makeText(SearchJobs.this, search + "found.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(SearchJobs.this,  "No matching result for " + search, Toast.LENGTH_SHORT).show();
         }
-        System.out.println(url);
     }
-
-//    private void firebaseSearch(){
-//        Jobs.class;
-//        jobDB;
-//
-//
-//    }
 
     private void Logout(){
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(SearchJobs.this, Login.class));
     }
-
-
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -183,7 +254,7 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
             }
         }
         //testing output for spinners
-        //Toast.makeText(adapterView.getContext(), "Region: " + region + "\nCategory: " + category + "\nJob Type: " + type , Toast.LENGTH_SHORT).show();
+        Toast.makeText(adapterView.getContext(), "Region: " + region + "\nCategory: " + category + "\nJob Type: " + type , Toast.LENGTH_SHORT).show();
     }
 
     @Override

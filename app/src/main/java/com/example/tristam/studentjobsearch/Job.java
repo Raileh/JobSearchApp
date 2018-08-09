@@ -1,20 +1,29 @@
 package com.example.tristam.studentjobsearch;
 
-public class Jobs {
+public class Job {
+    public String title;
     public String region;
     public String category;
     public String type;
 
-    public Jobs(String region, String category, String type) {
+    public Job(String title, String region, String category, String type) {
+        this.title = title;
         this.region = region;
         this.category = category;
         this.type = type;
     }
 
-    public Jobs(){
-
+    public Job(){
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getRegion() {
         return region;
