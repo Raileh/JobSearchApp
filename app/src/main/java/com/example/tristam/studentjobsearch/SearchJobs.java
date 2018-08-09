@@ -56,7 +56,7 @@ public class SearchJobs extends AppCompatActivity implements AdapterView.OnItemS
     public String type="";
 
     // Firebase URL
-    public String url = "https://assignment1-ba25d.firebaseio.com/";
+    //public String url = "https://assignment1-ba25d.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
